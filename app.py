@@ -2,8 +2,6 @@ import streamlit as st
 from src.processor import process_pdf
 from src.llm_logic import generate_quiz
 from dotenv import load_dotenv
-# from langchain.chains import create_retrieval_chain
-# from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_core.runnables import RunnablePassthrough
@@ -78,15 +76,9 @@ if submitted:
     st.write("### Results")
     for i, q in enumerate(st.session_state.current_quiz.questions):
         user_ans = st.session_state.user_answers.get(i)
-        
-        # We need to find which letter (A, B, C, D) corresponds to the user's choice
-        # q.options is a list: ["A) Option1", "B) Option2", ...]
-        
-        if user_ans:
-            # Check if the user's selected text starts with the correct answer letter
-            # Example: if user_ans is "Asexual reproduction" and q.answer is "A"
-            # we need to see if the option that starts with "A" is what the user picked.
             
+        if user_ans:
+                        
             # Find the full text of the correct option
             correct_option_text = ""
             for opt in q.options:
@@ -120,25 +112,15 @@ if user_question and "retriever" in st.session_state:
         )
 
         # Define the prompt for answering questions
-        # system_prompt = (
-        #     "Use the given context to answer the question. "
-        #     "If you don't know the answer, say you don't know. "
-        #     "Context: {context}"
-        # )
-        # prompt = ChatPromptTemplate.from_messages([
-        #     ("system", system_prompt),
-        #     ("human", "{input}"),
-        # ])
+        
         prompt = ChatPromptTemplate.from_template(
             "Use the context below to answer the question.\n\n"
             "Context:\n{context}\n\n"
             "Question: {question}\n\n"
             "If you don't know the answer, say you don't know."
         )
-        # Create the chains (This fulfills Part A: Step 6 of your manual)
-        # question_answer_chain = create_stuff_documents_chain(llm, prompt)
-        # rag_chain = create_retrieval_chain(st.session_state.retriever, question_answer_chain)
-        # 🔥 NEW LCEL RAG PIPELINE
+       
+        #   LCEL RAG PIPELINE
         rag_chain = (
             {
                 "context": st.session_state.retriever,
