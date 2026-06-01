@@ -26,7 +26,7 @@
 **Gen AI Concepts (brief overview)**
 - **Large Language Models (LLMs)**: Pretrained models that generate text given prompts. This project uses an LLM via API calls to generate MCQ text.
 - **Embeddings**: Dense vector representations of text that capture semantic meaning. Used to index and retrieve relevant document chunks for a prompt.
-- **Vector Databases / Similarity Search**: Store embeddings and perform nearest-neighbor search to fetch relevant context (Chroma in this repo).
+- **Vector Databases / Similarity Search**: Store embeddings and perform nearest-neighbor search to fetch relevant context .
 - **Retrieval-Augmented Generation (RAG)**: Combine retrieved context with LLM prompts so answers (here, MCQs) are grounded in source material.
 - **Prompt Engineering**: Carefully designing system and user prompts to steer the LLM output (question style, number of distractors, difficulty level).
 
@@ -78,8 +78,6 @@ You can use the chat/ask functionality to ask freeform questions within the cont
 
 If there is no dedicated UI, use `try.py` or extend `src/llm_logic.py` to call the chat function programmatically for experimentation.
 
-**Using the Vector DB**
-- The repository includes a pre-populated Chroma store at `vector_db/chroma.sqlite3` (and a UUID folder). You can replace or rebuild the store by running the embedding/ingestion routine in `src/processor.py` (see the module for usage notes).
 
 **Development Notes**
 - **Where to modify prompts**: `src/llm_logic.py` contains the prompt templates and LLM-call logic.
